@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <title>Goonable</title>
+</head>
+<body id="page">
+
+  <!-- Navbar -->
+  <div id="navbar">
+    <div class="nav-buttons">
+      <button onclick="showPage('home')">Home</button>
+      <button onclick="showPage('about')">About</button>
+      <button onclick="showPage('calc')">Calculator</button>
+    </div>
+    <button id="modeBtn" onclick="toggleDark()">Light mode</button>
+  </div>
+
+  <!-- Pages -->
+  <div id="homePage" class="page visible">
+    <p>
+      Welcome to our little corner of the internet! Here you'll find a mix of ideas, experiments, and a sprinkle of randomness. Whether you're exploring, learning, or just passing time, there's always something quirky to discover. Sit back, relax, and let your curiosity roam—who knows what you might stumble upon!
+    </p>
+  </div>
+
+  <div id="aboutPage" class="page hidden">
+    <p>
+      Hey there! This is the About section. This corner exists purely for curiosity, experimentation, and fun. Here, we test out new ideas, play with colors, buttons, and features—basically a sandbox to learn and create without limits. Enjoy exploring!
+    </p>
+  </div>
+
+  <div id="calcPage" class="page hidden">
+    <input id="display" type="text" readonly>
+    <div class="button-group" id="keys">
+      <button onclick="appendToDisplay('7')">7</button>
+      <button onclick="appendToDisplay('8')">8</button>
+      <button onclick="appendToDisplay('9')">9</button>
+      <button onclick="appendToDisplay('+')">+</button>
+
+      <button onclick="appendToDisplay('4')">4</button>
+      <button onclick="appendToDisplay('5')">5</button>
+      <button onclick="appendToDisplay('6')">6</button>
+      <button onclick="appendToDisplay('-')">-</button>
+
+      <button onclick="appendToDisplay('1')">1</button>
+      <button onclick="appendToDisplay('2')">2</button>
+      <button onclick="appendToDisplay('3')">3</button>
+      <button onclick="appendToDisplay('*')">*</button>
+
+      <button onclick="appendToDisplay('0')">0</button>
+      <button onclick="appendToDisplay('.')">.</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="clearDisplay()">C</button>
+    </div>
+  </div>
+
+  <script>
+    let darkMode = true;
+
+    // Dark/Light mode toggle
+    function toggleDark() {
+      const body = document.getElementById("page");
+      const buttons = document.querySelectorAll(".nav-buttons button, .button-group button");
+      const paragraphs = document.querySelectorAll(".page p");
+      const modeBtn = document.getElementById("modeBtn");
+
+      if (darkMode) {
+        body.style.backgroundColor = "#f5f5f5";
+        body.style.color = "#1a1a1a";
+
+        buttons.forEach(btn => {
+          btn.style.backgroundColor = "#e0e0e0";
+          btn.style.color = "#1a1a1a";
+        });
+
+        paragraphs.forEach(p => {
+          p.style.backgroundColor = "#e8e8e8";
+          p.style.color = "#555";
+        });
+
+        modeBtn.textContent = "Dark mode";
+        darkMode = false;
+      } else {
+        body.style.backgroundColor = "#1e1f23";
+        body.style.color = "lightgray";
+
+        buttons.forEach(btn => {
+          btn.style.backgroundColor = "#24262b";
+          btn.style.color = "lightgray";
+        });
+
+        paragraphs.forEach(p => {
+          p.style.backgroundColor = "#2a2b30";
+          p.style.color = "white";
+        });
+
+        modeBtn.textContent = "Light mode";
+        darkMode = true;
+      }
+    }
+
+    // Switch pages
+    function showPage(page) {
+      const pages = ['home', 'about', 'calc'];
+      pages.forEach(p => {
+        const element = document.getElementById(p + 'Page');
+        if (p === page) {
+          element.classList.remove('hidden');
+          element.classList.add('visible');
+        } else {
+          element.classList.remove('visible');
+          element.classList.add('hidden');
+        }
+      });
+    }
+
+    // Calculator functions
+    function appendToDisplay(value) {
+      document.getElementById("display").value += value;
+    }
+
+    function calculate() {
+      const display = document.getElementById("display");
+      try {
+        display.value = eval(display.value);
+      } catch {
+        display.value = "Error";
+      }
+    }
+
+    function clearDisplay() {
+      document.getElementById("display").value = "";
+    }
+  </script>
+</body>
+</html>
